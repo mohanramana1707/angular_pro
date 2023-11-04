@@ -1,0 +1,42 @@
+<p>rooms-list works!</p>
+
+
+   <h2>{{title}}</h2>
+
+    <table class="table">
+        <tr>
+            <th>S.NO</th>
+            <th>Odd/Even</th>
+            <th>Room Number</th>
+            <th>Room Type | titleCase</th>
+            <th>Room Price</th>
+            <th>Room Amenities</th>
+            <th>CheckIn time</th>
+            <th>Ratings</th>
+            <th>Select Room</th>
+        </tr>
+        <tr  *ngFor="let room of rooms; let i=index ; let e=even;let o=odd"
+                [ngClass]="e?'even':'odd'">
+
+            <td>{{i}}</td>
+            <td>{{e?'Even':'Odd'}}</td>
+            <td>{{room.roomNumber}}</td>
+            <td>{{room.roomType}}</td>
+            <td>{{room.price | currency :'INR'}}</td>
+            <td>{{room.amenities}}</td>
+            <td>{{room.checkinTime | date :'mediumDate'}}</td>    <!-- pipe-->
+            <td>{{room.rating | number :'1.1-2'}}</td>
+            <td>
+                <!-- <button class="btn btn-primary"  (click)="selectRoomChild(room)"> Select </button>    -->
+
+                <!--clicking this will call the method in child that will inturn emmit the room value to parent --> 
+                <!-- path:'rooms/:roomid',component:RoomsBookingComponent =this view will be rendered if Book Room button is clicked -->
+                <button class="btn btn-primary" [routerLink]="['/rooms',room.roomNumber]">BookRoom</button>
+                <!-- dynamic routing  : '/rooms' is not equal to 'rooms'. usually endpoints are appended ,but here it will start will rooms ,if we just put 'rooms' ,the endpoint would be rooms/rooms/id-->
+                
+            </td>
+
+        </tr>
+    </table>
+
+

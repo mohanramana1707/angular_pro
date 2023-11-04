@@ -1,0 +1,46 @@
+<h1>Welcome to {{hotelName}}</h1>   <!-- DataBinding= Interpolation -->
+ 
+<app-header> </app-header>  
+<app-header> </app-header>
+<app-header> </app-header>
+
+ <!-- getting from ts -->
+{{rooms$ | async | json}}
+
+
+<div [hidden]="hideRooms"  [ngStyle]="{ 'color': rooms.availableRooms>0 ? 'green':'red'}" >
+
+    Number of Rooms AVailable 
+    <div [innerText]="numberOfRooms"> </div>    <!-- DataBinding= property Binding -->
+
+</div>
+
+   <!--{{roomList | json }} -->
+
+{{rooms?.availableRooms ?? 'NO Rooms'}};
+
+<div *ngIf="rooms.availableRooms >0">  
+    <app-rooms-list [rooms]="roomList"   [title]="ptitle" (selectedRoom)="selectRoom($event)"> </app-rooms-list> 
+    <!--INPUT= store the values from roomList from PARENT to rooms in CHILD(rooms is a property in app-rooms-list) using PROPERTY-BINDING -->
+    <!--OUTPUT= after selectedRoom() in CHILD emit value ie..($event) , call the selectRoom() in PARENT to store the emmited value in PARENT-->
+</div>
+
+ <h1>The selected Room is:</h1>
+<div *ngIf="selectedRoom">
+        {{selectedRoom | json}}
+</div>
+
+<button class="btn btn-primary" (click)="addRoom()"> addRoom</button>
+<br>
+<br>
+
+
+<button (click)="toogle()"> Toogle</button>
+<button (click)="editRoom()"> EditRoom</button>
+
+<button (click)="deleteRoom()"> deleteRoom</button>
+
+<h1> {{totalbytes}} loaded !!!....</h1>
+
+<!-- for child ROUTES = RoomBooking component will be rendered with ROOM ID -->
+<router-outlet></router-outlet>    
